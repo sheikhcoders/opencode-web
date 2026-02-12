@@ -1,8 +1,10 @@
-from zeroconf import IPVersion, ServiceInfo, Zeroconf
+"""mDNS discovery module for OpenCode Web."""
 import socket
 import click
+from zeroconf import IPVersion, ServiceInfo, Zeroconf
 
 def advertise_service(port, domain):
+    """Advertise the web server over mDNS."""
     desc = {'version': '0.1.0'}
 
     if domain.endswith(".local"):
@@ -19,7 +21,7 @@ def advertise_service(port, domain):
         s.connect(("8.8.8.8", 80))
         ip_address = s.getsockname()[0]
         s.close()
-    except Exception:
+    except Exception: # pylint: disable=broad-exception-caught
         ip_address = "127.0.0.1"
 
     info = ServiceInfo(

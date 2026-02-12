@@ -1,0 +1,19 @@
+name: Lint
+
+on: [push, pull_request]
+
+jobs:
+  pylint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    - name: Install dependencies
+      run: |
+        pip install pylint fastapi uvicorn click zeroconf pydantic-settings jinja2 python-multipart websockets
+    - name: Analysing the code with pylint
+      run: |
+        pylint $(git ls-files '*.py')

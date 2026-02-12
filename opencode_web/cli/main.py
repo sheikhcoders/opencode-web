@@ -1,12 +1,12 @@
-import click
-import sys
+"""CLI module for OpenCode Web."""
 import asyncio
+import click
 import websockets
 from opencode_web.server.main import run_server
 
 @click.group()
 def main():
-    pass
+    """Main entry point for the opencode CLI."""
 
 @main.command()
 @click.option('--port', default=None, type=int, help='Port to run the server on.')
@@ -19,6 +19,7 @@ def web(port, hostname, mdns, mdns_domain, cors):
     run_server(port=port, hostname=hostname, mdns=mdns, mdns_domain=mdns_domain, cors=cors)
 
 async def attach_terminal(url):
+    """Asynchronous function to attach to the terminal WebSocket."""
     # Determine the websocket URL
     ws_url = url.rstrip('/').replace("http://", "ws://").replace("https://", "wss://") + "/ws/terminal"
 
@@ -39,7 +40,7 @@ async def attach_terminal(url):
                     break
                 response = await websocket.recv()
                 click.echo(response)
-    except Exception as e:
+    except Exception as e: # pylint: disable=broad-exception-caught
         click.echo(f"Error attaching to server: {e}")
 
 @main.command()
