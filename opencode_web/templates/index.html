@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OpenCode Web</title>
+    <style>
+        body { background-color: #121212; color: #e0e0e0; font-family: sans-serif; padding: 40px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background-color: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #333; }
+        h1 { color: #fff; }
+        button { background-color: #137fec; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #1565c0; }
+        .session-item { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding: 10px 0; }
+        .status-online { color: #4caf50; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OpenCode Web</h1>
+        <div class="card">
+            <h2>Active Sessions</h2>
+            <div id="sessions">
+                <p>No active sessions found. Start one to get coding!</p>
+            </div>
+            <br>
+            <button onclick="startSession()">Start New Session</button>
+        </div>
+        <div class="card">
+            <h2>Server Status</h2>
+            <p>Status: <span class="status-online">Online</span></p>
+            <p>Address: <span id="address"></span></p>
+            <button onclick="location.href='/servers'">See Servers</button>
+        </div>
+    </div>
+    <script>
+        function startSession() {
+            const name = prompt("Enter session name:", "My Session");
+            if (name) {
+                fetch('/api/sessions', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({name: name})
+                }).then(() => loadSessions());
+            }
+        }
+        function loadSessions() {
+            fetch('/api/sessions').then(r => r.json()).then(data => {
+                const container = document.getElementById('sessions');
+                if (data.length === 0) {
+                    container.innerHTML = '<p>No active sessions found. Start one to get coding!</p>';
+                    return;
+                }
+                container.innerHTML = data.map(s => `
+                    <div class="session-item">
+                        <span>${s.name} (${s.id})</span>
+                        <button onclick="location.href='/session/${s.id}'">Open</button>
+                    </div>
+                `).join('');
+            });
+        }
+        fetch('/api/status').then(r => r.json()).then(data => {
+            document.getElementById('address').innerText = `http://${data.hostname}:${data.port}`;
+        });
+        loadSessions();
+    </script>
+</body>
+</html>

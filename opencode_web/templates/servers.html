@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Server Status - OpenCode Web</title>
+    <style>
+        body { background-color: #121212; color: #e0e0e0; font-family: sans-serif; padding: 40px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .card { background-color: #1e1e1e; padding: 20px; border-radius: 8px; margin-bottom: 20px; border: 1px solid #333; }
+        h1 { color: #fff; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #333; }
+        .status-online { color: #4caf50; }
+        button { background-color: #333; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <button onclick="location.href='/'">← Back to Dashboard</button>
+        <h1>Server Status</h1>
+        <div class="card">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Server</th>
+                        <th>Status</th>
+                        <th>Uptime</th>
+                        <th>CPU</th>
+                        <th>RAM</th>
+                    </tr>
+                </thead>
+                <tbody id="server-list">
+                    <tr>
+                        <td>Local Server</td>
+                        <td><span class="status-online">Online</span></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

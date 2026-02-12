@@ -1,0 +1,35 @@
+[project]
+name = "opencode-web"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "google-labs-jules[bot]",email = "161369871+google-labs-jules[bot]@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi (>=0.128.8,<0.129.0)",
+    "uvicorn (>=0.40.0,<0.41.0)",
+    "click (>=8.3.1,<9.0.0)",
+    "zeroconf (>=0.148.0,<0.149.0)",
+    "pydantic-settings (>=2.12.0,<3.0.0)",
+    "jinja2 (>=3.1.6,<4.0.0)",
+    "python-multipart (>=0.0.22,<0.0.23)",
+    "websockets (>=16.0,<17.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[project.scripts]
+opencode = "opencode_web.cli.main:main"
+
+[dependency-groups]
+dev = [
+    "pytest (>=9.0.2,<10.0.0)",
+    "pytest-asyncio (>=1.3.0,<2.0.0)",
+    "httpx (>=0.28.1,<0.29.0)",
+    "playwright (>=1.58.0,<2.0.0)"
+]
